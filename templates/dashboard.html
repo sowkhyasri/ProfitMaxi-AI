@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ProfitMaxi AI | Smart Business Intelligence</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body {
+            background: #f4f6fb;
+            font-family: Arial, sans-serif;
+            color: #20283a;
+        }
+
+        .navbar {
+            background: #172554;
+            padding: 15px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #172554, #2563eb);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 25px;
+        }
+
+        .hero h1 {
+            font-weight: bold;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 13px;
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            height: 100%;
+            border-bottom: 4px solid #2563eb;
+        }
+
+        .kpi-card h6 {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .kpi-card h3 {
+            color: #1d4ed8;
+            font-weight: bold;
+            font-size: 24px;
+            overflow-wrap: anywhere;
+        }
+
+        .agent-title {
+            color: #172554;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .insight {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+            padding: 16px;
+            margin-bottom: 13px;
+            border-radius: 7px;
+        }
+
+        .upload-box {
+            border: 2px dashed #93c5fd;
+            border-radius: 10px;
+            padding: 25px;
+            background: #f8fafc;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        table {
+            vertical-align: middle !important;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+    <div class="container">
+        <span class="navbar-brand">
+            ProfitMaxi AI
+        </span>
+
+        <span class="text-white">
+            Smart Distributor Intelligence
+        </span>
+    </div>
+</nav>
+
+
+<div class="container pb-5">
+
+    <!-- HERO SECTION -->
+
+    <div class="hero">
+
+        <h1>ProfitMaxi AI Dashboard</h1>
+
+        <p class="mb-0">
+            Intelligent FMCG Distribution Management
+            and Business Decision Support System.
+        </p>
+
+        <p class="mt-3 mb-0">
+            Analyze sales, maximize profits, forecast demand,
+            optimize inventory and improve delivery operations.
+        </p>
+
+    </div>
+
+
+    <!-- FILE UPLOAD -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Upload Business Dataset
+        </h4>
+
+        <form
+            action="/analyze"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="upload-box">
+
+                <div class="row g-3 align-items-center">
+
+                    <div class="col-md-9">
+
+                        <input
+                            type="file"
+                            name="file"
+                            class="form-control"
+                            accept=".csv,.xlsx,.xls"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Analyze Business Data
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <small class="text-muted mt-2 d-block">
+                    Upload BUSY Accounting exported CSV or Excel data.
+                    Supported formats: CSV, XLSX and XLS.
+                </small>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    {% if revenue is defined %}
+
+
+    <!-- BUSINESS PERFORMANCE -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Business Performance Overview
+        </h4>
+
+        <div class="row g-3">
+
+            <div class="col-md-4 col-lg">
+                <div class="kpi-card">
+                    <h6>Total Revenue</h6>
+                    <h3>₹{{ "%.2f"|format(revenue) }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg">
+                <div class="kpi-card">
+                    <h6>Gross Profit</h6>
+                    <h3>₹{{ "%.2f"|format(profit) }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg">
+                <div class="kpi-card">
+                    <h6>Purchase Amount</h6>
+                    <h3>₹{{ "%.2f"|format(purchase) }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg">
+                <div class="kpi-card">
+                    <h6>Profit Margin</h6>
+                    <h3>{{ "%.2f"|format(margin) }}%</h3>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg">
+                <div class="kpi-card">
+                    <h6>Units Sold</h6>
+                    <h3>{{ quantity }}</h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHART DATA FOR CHART.JS -->
+
+    <script id="chart-data" type="application/json">
+    {{ {
+        "products": products,
+        "demand": demand_forecasts,
+        "inventory": inventory_recommendations,
+        "logistics": logistics_data.deliveries
+            if logistics_data.status == "success"
+            else []
+    } | tojson }}
+    </script>
+
+
+    <!-- VISUAL ANALYTICS -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Business Visual Analytics
+        </h4>
+
+        <p class="text-muted">
+            Interactive charts generated from the six-agent analysis.
+        </p>
+
+        <div class="row g-4">
+
+            <div class="col-lg-6">
+
+                <h6>Product-wise Sales Quantity</h6>
+
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <h6>Product-wise Revenue</h6>
+
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <h6>Product-wise Gross Profit</h6>
+
+                <div class="chart-container">
+                    <canvas id="profitChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <h6>Demand Forecast</h6>
+
+                <div class="chart-container">
+                    <canvas id="demandChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <h6>Inventory Stock vs Reorder</h6>
+
+                <div class="chart-container">
+                    <canvas id="inventoryChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <h6>Retailer-wise Delivery Distance</h6>
+
+                <div class="chart-container">
+                    <canvas id="logisticsChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- AGENT 1 AND 2: SALES AND PROFIT -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Agent 1 & 2 – Sales and Profit Analytics
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Revenue</th>
+                        <th>Purchase Amount</th>
+                        <th>Gross Profit</th>
+                        <th>Margin</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in products %}
+
+                    <tr>
+
+                        <td>{{ item.product }}</td>
+
+                        <td>{{ item.quantity }}</td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(item.revenue) }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(item.purchase_amount) }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(item.gross_profit) }}
+                        </td>
+
+                        <td>
+                            {{ "%.2f"|format(item.gross_margin) }}%
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- AGENT 3: DEMAND FORECAST -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Agent 3 – Demand Forecasting
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+
+                <thead class="table-primary">
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Last Week Sales</th>
+                        <th>Forecast Demand</th>
+                        <th>Forecast Week</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in demand_forecasts %}
+
+                    <tr>
+
+                        <td>{{ item.product }}</td>
+
+                        <td>{{ item.last_week_sales }}</td>
+
+                        <td>{{ item.forecast_demand }}</td>
+
+                        <td>{{ item.forecast_week }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <small class="text-muted">
+            Demand forecast uses a three-recorded-week moving average.
+        </small>
+
+    </div>
+
+
+    <!-- AGENT 4: INVENTORY -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Agent 4 – Inventory Optimization
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+
+                <thead class="table-primary">
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Current Stock</th>
+                        <th>Forecast Demand</th>
+                        <th>Safety Stock</th>
+                        <th>Reorder Quantity</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in inventory_recommendations %}
+
+                    <tr>
+
+                        <td>{{ item.product }}</td>
+
+                        <td>{{ item.current_stock }}</td>
+
+                        <td>{{ item.forecast_demand }}</td>
+
+                        <td>{{ item.safety_stock }}</td>
+
+                        <td>{{ item.reorder_quantity }}</td>
+
+                        <td>
+
+                            {% if item.reorder_quantity > 0 %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Reorder Required
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    Stock Sufficient
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No inventory recommendations available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- AGENT 5: LOGISTICS -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Agent 5 – Logistics Optimization
+        </h4>
+
+        {% if logistics_data.status == "success" %}
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-6">
+
+                <div class="kpi-card">
+
+                    <h6>Total Delivery Distance</h6>
+
+                    <h3>
+                        {{ logistics_data.total_distance }} km
+                    </h3>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="kpi-card">
+
+                    <h6>Total Delivery Cost</h6>
+
+                    <h3>
+                        ₹{{ logistics_data.total_delivery_cost }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+
+                <thead class="table-primary">
+
+                    <tr>
+                        <th>Retailer</th>
+                        <th>Total Distance</th>
+                        <th>Average Distance</th>
+                        <th>Delivery Cost</th>
+                        <th>Deliveries</th>
+                        <th>Recommendation</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in logistics_data.deliveries %}
+
+                    <tr>
+
+                        <td>{{ item.retailer }}</td>
+
+                        <td>
+                            {{ item.total_distance }} km
+                        </td>
+
+                        <td>
+                            {{ item.average_distance }} km
+                        </td>
+
+                        <td>
+                            ₹{{ item.total_delivery_cost }}
+                        </td>
+
+                        <td>
+                            {{ item.delivery_count }}
+                        </td>
+
+                        <td>
+                            {{ item.recommendation }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No delivery records available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-warning">
+            {{ logistics_data.message }}
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- AGENT 6: BUSINESS ADVISOR -->
+
+    <div class="section-card">
+
+        <h4 class="agent-title">
+            Agent 6 – AI Business Advisor
+        </h4>
+
+        <p class="text-muted">
+            Business recommendations generated by combining
+            the outputs of all other agents.
+        </p>
+
+        {% for insight in advisor_data.insights %}
+
+        <div class="insight">
+
+            <strong>
+                Business Insight {{ loop.index }}
+            </strong>
+
+            <p class="mb-0 mt-2">
+                {{ insight }}
+            </p>
+
+        </div>
+
+        {% else %}
+
+        <p>No business insights available.</p>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% endif %}
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h5>ProfitMaxi AI</h5>
+
+    <p class="mb-0">
+        Intelligent FMCG Distribution and Business Decision Support
+    </p>
+
+</footer>
+
+
+<!-- Chart.js custom script -->
+<script src="{{ url_for('static', filename='charts.js') }}"></script>
+
+</body>
+
+</html>
+

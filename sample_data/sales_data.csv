@@ -1,0 +1,19 @@
+
+date,product,quantity,selling_price,purchase_cost,retailer,current_stock,distance_km,delivery_cost
+2026-10-19,Fortune Oil,100,150,125,Store A,80,12,150
+2026-10-19,Britannia Biscuits,200,30,23,Store B,180,25,300
+2026-10-19,Cadbury,80,50,40,Store C,70,8,100
+2026-10-19,Wheat Flour,120,45,36,Store A,100,12,150
+2026-10-26,Fortune Oil,110,150,125,Store A,80,12,150
+2026-10-26,Britannia Biscuits,220,30,23,Store B,180,25,300
+2026-10-26,Cadbury,90,50,40,Store C,70,8,100
+2026-10-26,Wheat Flour,130,45,36,Store A,100,12,150
+2026-11-02,Fortune Oil,120,150,125,Store A,80,12,150
+2026-11-02,Britannia Biscuits,210,30,23,Store B,180,25,300
+2026-11-02,Cadbury,100,50,40,Store C,70,8,100
+2026-11-02,Wheat Flour,140,45,36,Store A,100,12,150
+2026-11-09,Fortune Oil,130,150,125,Store A,80,12,150
+2026-11-09,Britannia Biscuits,240,30,23,Store B,180,25,300
+2026-11-09,Cadbury,110,50,40,Store C,70,8,100
+2026-11-09,Wheat Flour,150,45,36,Store A,100,12,150
+
